@@ -1,0 +1,32 @@
+GAME PLAN!!!
+
+things to figure out / get done
+
+
+[] get a basic simple d3 node network graph working.
+[] figure out how to extract relevant info from peoples dubhacks discord introduction
+[] figure out how to create/represent objects of people
+    --> which fields to include, and how to use the extracted info to get that working
+    --> what is the best representation? is it json of fields, is it typescript objects?
+[] figure out how to represent people as node in the d3 graph 
+[] find out how to determine similarity between people? 
+    --> what factors should i consider?
+    --> what similarity algo?
+    --> find out how to calculate similarity score between?
+[] figure out how to add logic for edges between nodes in a d3 graph 
+[] 
+
+
+//  other things to think about convo w jake harper: 
+   --> aritists and genres network graph : R — node visualization network. we found this R lib might be using d3 as the underlying implementation
+   --> 2d might be easier. Physics! 
+
+
+
+Coldplay concert 
+
+
+// other data sources from convo w caleb hu!
+    --> COM2 member list
+    --> cseed member list (we literally have a fun fact section so might be able ot get more unique interests and then concnect ppl on the graph)
+    --> Coldplay concert 
