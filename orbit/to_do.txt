@@ -14,7 +14,7 @@ things to figure out / get done
     --> what similarity algo?
     --> find out how to calculate similarity score between?
 [] figure out how to add logic for edges between nodes in a d3 graph 
-[] 
+[] use similarity logic to replace logic for edges between the nodes 
 
 
 //  other things to think about convo w jake harper: 
