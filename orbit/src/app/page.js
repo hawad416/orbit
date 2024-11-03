@@ -15,7 +15,7 @@ export default function Home() {
     let nodeMeshes = [];
 
     for(let mesh of nodes) {
-      const geometry = new THREE.SphereGeometry(5, 32, 16);
+      const geometry = new THREE.SphereGeometry(4, 32, 16);
       const material = new THREE.MeshBasicMaterial({ color: "green"});
       const nodeSphere = new THREE.Mesh(geometry, material);
 
@@ -31,6 +31,23 @@ export default function Home() {
     return nodeMeshes
   }
 
+  function drawLineBetweenNodes(node1, node2) {
+    const material = new THREE.LineBasicMaterial({ color: 0x0000ff }); // Blue color
+    const geometry = new THREE.BufferGeometry().setFromPoints([
+      new THREE.Vector3(
+        node1.getPosition().x,
+        node1.getPosition().y,
+        node1.getPosition().z
+      ),
+      new THREE.Vector3(
+        node2.getPosition().x,
+        node2.getPosition().y,
+        node2.getPosition().z
+      ),
+    ]);
+    const line = new THREE.Line(geometry, material);
+    return line;
+  }
 
   /* 
      since our nextjs only runs on the server side, we won't have access to properties on the client side such as the window and dom elements.
@@ -57,37 +74,65 @@ export default function Home() {
       // Set up renderer
       const renderer = new THREE.WebGLRenderer({canvas: canvas});
       renderer.setSize(window.innerWidth, window.innerHeight);
+      document.body.appendChild(renderer.domElement);
+
 
       // Example of adding a cube
-      const geometry = new THREE.BoxGeometry(1,1,1);
-      const material = new THREE.MeshBasicMaterial({ color: "brown", wireframe: true});
+      const geometry = new THREE.BoxGeometry(10,10,10);
+      const material = new THREE.MeshBasicMaterial({ color: "pink", wireframe: true});
       const cube = new THREE.Mesh(geometry, material);
-   //   scene.add(cube);
+      scene.add(cube);
 
-      const geometry2 = new THREE.BoxGeometry(3,3,3);
-      const material2 = new THREE.MeshBasicMaterial({ color: "red", wireframe: true});
+      const geometry2 = new THREE.BoxGeometry(10,10,10);
+      const material2 = new THREE.MeshBasicMaterial({ color: "pink", wireframe: true});
       const cube2 = new THREE.Mesh(geometry2, material2);
-      cube2.position.x = 5
+      cube2.position.x = 200
 
-     // scene.add(cube2);
+      scene.add(cube2);
 
 
-      camera.position.z = -15;
       camera.position.set(0, 0, 300);
 
-      const totalNodes = 6;
+      const totalNodes = 12;
       const graph = new Graph(totalNodes);
       const node1 = new Node();
       const node2 = new Node();
       const node3 = new Node();
       const node4 = new Node();
+      const node5 = new Node();
+      const node6 = new Node();
+      const node7 = new Node();
+      const node8 = new Node();
+      const node9 = new Node();
+      const node10 = new Node();
+      const node11 = new Node();
+      const node12 = new Node();
       graph.addNode(node1);
       graph.addNode(node2);
       graph.addNode(node3);
       graph.addNode(node4);
+      graph.addNode(node5);
+      graph.addNode(node6);
+      graph.addNode(node7);
+      graph.addNode(node8);
+      graph.addNode(node9);
+      graph.addNode(node10);
+      graph.addNode(node11);
+      graph.addNode(node12);
+
+
+
       graph.addEdge(node1, node2);
       graph.addEdge(node1, node3);
       graph.addEdge(node1, node4);
+
+      graph.addEdge(node2, node1);
+      graph.addEdge(node2, node8);
+      graph.addEdge(node8, node3);
+      graph.addEdge(node4, node9);
+      
+  
+      
       
     
       console.log(graph);
@@ -99,9 +144,19 @@ export default function Home() {
         scene.add(nodeMesh);
       }
 
-      renderer.render(scene, camera);
 
-      document.body.appendChild(renderer.domElement);
+      for(let i = 0; i < totalNodes; i++) {
+        const node = graph.getNodes()[i];
+        const edges = graph.getNeighbors(node);
+
+        for(let j = 0; j < edges.length; j++) {
+          const line = drawLineBetweenNodes(node, edges[j]);
+          scene.add(line);
+        }
+
+      }
+
+      renderer.render(scene, camera);
 
       const animate = function () {
         requestAnimationFrame(animate);
@@ -109,6 +164,10 @@ export default function Home() {
         // Rotate the cube for demonstration
         cube.rotation.x += 0.01;
         cube.rotation.y += 0.01;
+
+         // Rotate the cube for demonstration
+         cube2.rotation.x += 0.01;
+         cube2.rotation.y += 0.01;
 
         renderer.render(scene, camera);
 
