@@ -15,8 +15,8 @@ export default function Home() {
     let nodeMeshes = [];
 
     for(let mesh of nodes) {
-      const geometry = new THREE.SphereGeometry(2, 32, 16);
-      const material = new THREE.MeshBasicMaterial({ color: "purple", wireframe: true});
+      const geometry = new THREE.SphereGeometry(5, 32, 16);
+      const material = new THREE.MeshBasicMaterial({ color: "green"});
       const nodeSphere = new THREE.Mesh(geometry, material);
 
       nodeSphere.position.set(
@@ -46,7 +46,7 @@ export default function Home() {
 
       // Initialize scene and camera once the component has mounted
       const scene = new THREE.Scene();
-      const camera = new THREE.PerspectiveCamera(
+      let camera = new THREE.PerspectiveCamera(
         75,
         window.innerWidth / window.innerHeight,
         0.1,
@@ -71,7 +71,8 @@ export default function Home() {
 
      // scene.add(cube2);
 
-      camera.position.z = 5;
+
+      camera.position.z = -15;
       camera.position.set(0, 0, 300);
 
       const totalNodes = 6;
@@ -98,12 +99,9 @@ export default function Home() {
         scene.add(nodeMesh);
       }
 
-
       renderer.render(scene, camera);
 
       document.body.appendChild(renderer.domElement);
-
-
 
       const animate = function () {
         requestAnimationFrame(animate);
